@@ -1,3 +1,30 @@
 @import "tailwindcss";
 
+@keyframes grow {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
 
+@keyframes growWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 30%; /* Match the w-150 Tailwind class */
+  }
+}
+
+.animate-grow {
+  animation: grow 0.5s ease-out forwards;
+  transform-origin: center;
+}
+
+.animate-grow-width {
+  animation: growWidth 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  
+  overflow: hidden; /* Prevent content overflow during animation */
+}

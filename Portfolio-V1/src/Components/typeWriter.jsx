@@ -1,28 +1,30 @@
 import { useState, useEffect } from 'react';
 
-const useTypewriter = (text, speed = 25, onComplete) => {
+const useTypewriter = (text, speed = 15, onComplete) => {
   const [displayText, setDisplayText] = useState('');
 
   useEffect(() => {
-    let i = 0;
-    setDisplayText(''); // Reset the display text when the effect runs
-    const typingInterval = setInterval(() => {
-      if (i < text.length) {
-        setDisplayText(prevText => prevText + text.charAt(i));
-        i++;
+    let index = 0;
+    let output = '';
+    setDisplayText(''); // Clear it first
+
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        output += text.charAt(index);
+        setDisplayText(output);
+        index++;
       } else {
-        clearInterval(typingInterval);
-        if (onComplete) onComplete(); // Call the onComplete callback when typing finishes
+        clearInterval(interval);
+        if (onComplete) onComplete();
       }
     }, speed);
 
-    return () => {
-      clearInterval(typingInterval);
-    };
-  }, [text, speed]); // Removed `onComplete` from the dependency array
+    return () => clearInterval(interval);
+  }, [text, speed]);
 
   return displayText;
 };
+
 
 const Typewriter = ({ text, speed, confirmation, confirmationDelay = 200  }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -39,7 +41,7 @@ const Typewriter = ({ text, speed, confirmation, confirmationDelay = 200  }) => 
 
   return (
     <div>
-      <p className="text-white">{displayText} <span>&nbsp;</span>
+      <p className="text-white">&gt;{displayText} <span>&nbsp;</span>
       {showConfirmation && <span className="text-green-500">{confirmation}</span>}
       </p>
     </div>
