@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Typewriter from './Components/typeWriter';
 import Square from './Square';
+import './App.css';
 
 function Hero() {
   const [state, setState] = useState({
     visibleElements: Array(20).fill(false), // Visibility of Typewriter elements
-    showDimmingBox: false,
     fadeOut: false,
     animationComplete: false,
   });
@@ -30,12 +30,6 @@ function Hero() {
   useEffect(() => {
     const timeouts = [];
 
-    // Show the dimming box after 1 second
-    timeouts.push(
-      setTimeout(() => {
-        setState(prev => ({ ...prev, showDimmingBox: true }));
-      }, 1000)
-    );
 
     // Dynamically create timeouts for showing and hiding Typewriter elements
     typewriterData.forEach((_, index) => {
@@ -47,7 +41,7 @@ function Hero() {
             updated[index] = true;
             return { ...prev, visibleElements: updated };
           });
-        }, 1000 + index * 800) // Adjust timing for each element
+        }, 1000 + index * 400) // Adjust timing for each element
       );
 
       // Hide the element after it has been visible for 2 seconds
@@ -66,12 +60,12 @@ function Hero() {
     timeouts.push(
       setTimeout(() => {
         setState(prev => ({ ...prev, fadeOut: true }));
-      }, 13000)
+      }, 9000)
     );
     timeouts.push(
       setTimeout(() => {
         setState(prev => ({ ...prev, animationComplete: true }));
-      }, 15000)
+      }, 9500)
     );
 
     // Cleanup all timeouts
@@ -90,27 +84,23 @@ function Hero() {
         state.fadeOut ? 'opacity-0' : 'opacity-100'
       }`}
     >
+      
       {/* Background Squares */}
+
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
         <Square />
       </div>
-      {/* Dimming Box */}
-      {state.showDimmingBox && <div
-          className="absolute top-300/1000 left-355/1000 w-29/100 h-1/2 pointer-events-none"
-          style={{
-            background: 'linear-gradient(to top, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 100%)',
-            zIndex: 10,
-          }}
-        ></div>}
+
 
       {/* Typewriter Elements */}
-      <div className="z-5 w-27/100">
+      <div className="z-5 w-27/100 h-110 animate-close flex flex-col justify-center items-start" style={{ animationDelay: '8000ms' }}>
         {typewriterData.map((item, index) =>
           state.visibleElements[index] ? (
             <Typewriter key={index} text={item.text} confirmation={item.confirmation} />
           ) : null
         )}
       </div>
+      
     </section>
   );
 }

@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
-@keyframes grow {
+@keyframes close {
   0% {
-    transform: scale(0);
+    width:27%
   }
   100% {
-    transform: scale(1);
+    width:0%;
   }
 }
 
@@ -18,13 +18,30 @@
   }
 }
 
-.animate-grow {
-  animation: grow 0.5s ease-out forwards;
-  transform-origin: center;
+@keyframes growWidthReverse {
+  0% {
+    width: 30%; /* Start at full width */
+  }
+  
+  100% {
+    width: 0; /* Fully close */
+
+  }
+}
+
+.animate-close {
+    animation: close 0.5s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  
+    overflow: hidden;
 }
 
 .animate-grow-width {
   animation: growWidth 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
   
+  overflow: hidden; /* Prevent content overflow during animation */
+}
+
+.animate-grow-width-reverse {
+  animation: growWidthReverse 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
   overflow: hidden; /* Prevent content overflow during animation */
 }
