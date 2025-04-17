@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Typewriter from './Components/typeWriter';
 import Square from './Square';
+import Layout from './Layout';
 import './App.css';
 
 function Hero() {
@@ -75,7 +76,7 @@ function Hero() {
   }, []);
 
   if (state.animationComplete) {
-    return <NextPage />;
+    return <Layout />;
   }
 
   return (
