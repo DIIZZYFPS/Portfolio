@@ -31,10 +31,9 @@ jobs:
       - name: Debug Step
         working-directory: ./Portfolio-V1
         run: |
-            echo "Checking Vite configuration..."
-            ls -la ./Portfolio-V1
-            cat ./Portfolio-V1/vite.config.js || echo "vite.config.js not found"
-            
+            echo "Checking Vite configuration from within the correct directory..."
+            ls -la .
+            cat ./vite.config.js || echo "vite.config.js not found"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
