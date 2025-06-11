@@ -27,18 +27,6 @@ jobs:
           node-version: "20"
           cache: 'npm'
           cache-dependency-path: Portfolio-V1/package-lock.json
-          
-      - name: Debug Step
-        working-directory: ./Portfolio-V1
-        run: |
-            echo "Checking Vite configuration from within the correct directory..."
-            ls -la .
-            cat ./vite.config.js || echo "vite.config.js not found"
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          static_site_generator: vite
 
       - name: Install dependencies
         run: npm ci
