@@ -1,5 +1,5 @@
 import Typewriter from "./typeWriter";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 
 
@@ -7,15 +7,16 @@ export default function Namebar() {
     const [state, setState] = useState({
         visibleElements: [false, false, false] // Track visibility of each element
     });
-    const typewriterData = [
+    
+    const typewriterData = useMemo(() => [
         { text: "Damarrion Morgan-Harper", confirmation: "" },
         { text: "Software Engineer", confirmation: "" },
         { text: "Los Angeles, CA", confirmation: "" }
-    ];
+    ], []);
     
     useEffect(() => {
-        const timeouts = [];
-    
+        const timeouts: any[] = [];
+
         typewriterData.forEach((_, index) => {
             // Show the element
             timeouts.push(
@@ -32,7 +33,7 @@ export default function Namebar() {
         return () => {
             timeouts.forEach(timeout => clearTimeout(timeout)); // Cleanup all timeouts on unmount
         };
-    }, []);
+    }, [typewriterData]);
 
     return(
         <div className="flex items-start justify-start border border-white w-20/100 bg-black">

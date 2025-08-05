@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Typewriter from './Components/typeWriter';
 import Square from './Square';
 import Layout from './Layout';
@@ -11,7 +11,7 @@ function Hero() {
     animationComplete: false,
   });
 
-  const typewriterData = [
+  const typewriterData = useMemo(() => [
     { text: "INITIATING PROTOCOL_01...", confirmation: "[BOOT SEQUENCE ACK]" },
     { text: "SYSTEM STATUS: ", confirmation: "[ONLINE]" },
     { text: "LOADING VISUAL INTERFACE...", confirmation: "[UI MODULE SYNCED]" },
@@ -26,10 +26,10 @@ function Hero() {
     { text: "ACTIVATING USER INTERFACE...", confirmation: "[UI ACTIVE]" },
     { text: "SYSTEM DIAGNOSTICS COMPLETE...", confirmation: "[DIAGNOSTICS OK]" },
     { text: "SYSTEM FULLY OPERATIONAL", confirmation: "[OPERATIONAL]" },
-  ];
+  ], []);
 
   useEffect(() => {
-    const timeouts = [];
+    const timeouts: number[] = [];
 
 
     // Dynamically create timeouts for showing and hiding Typewriter elements
@@ -73,7 +73,7 @@ function Hero() {
     return () => {
       timeouts.forEach(timeout => clearTimeout(timeout));
     };
-  }, []);
+  }, [typewriterData]);
 
   if (state.animationComplete) {
     return <Layout />;
@@ -103,14 +103,6 @@ function Hero() {
       </div>
       
     </section>
-  );
-}
-
-function NextPage() {
-  return (
-    <div className="bg-black h-screen flex items-center justify-center">
-      <h1 className="text-white text-4xl">Portfolio</h1>
-    </div>
   );
 }
 
