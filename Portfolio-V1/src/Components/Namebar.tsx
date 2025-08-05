@@ -36,8 +36,8 @@ export default function Namebar() {
     }, [typewriterData]);
 
     return(
-        <div className="flex items-start justify-start border border-white w-20/100 bg-black ml-3">
-            <div className="text-white text-2xl font-mono">
+        <div className="flex items-start justify-start border border-white w-20/100 bg-black ml-4">
+            <div className="text-green-400 text-2xl font-mono">
                 {typewriterData.map((item, index) => (
                     state.visibleElements[index] ? (
                         <Typewriter
