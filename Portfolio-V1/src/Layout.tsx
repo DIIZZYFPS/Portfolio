@@ -1,5 +1,4 @@
-import Hero from './hero';
-import Namebar from './Components/Namebar';
+import Namebar from '@/Components/Namebar';
 
 export default function Layout() {
 
