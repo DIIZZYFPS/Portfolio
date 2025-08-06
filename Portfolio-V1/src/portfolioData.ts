@@ -14,7 +14,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: 'career-coach',
+    id: 'career-coach.exe',
     name: 'Career Coach',
     tagline: 'Your AI-powered career advisor.',
     description: 'An application that provides resume feedback, generates cover letters, and conducts mock interviews using AI.',
@@ -27,7 +27,7 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'project-icarus',
+    id: 'project-icarus.exe',
     name: 'Project Icarus',
     tagline: 'Collaborative task management.',
     description: 'A real-time project management tool with features like kanban boards, task assignments, and progress tracking.',
@@ -39,8 +39,8 @@ export const projects: Project[] = [
       source: 'https://placehold.co/600x400/000000/FFF?text=Project+Icarus+Demo',
     },
   },
-    {
-    id: 'saive',
+  {
+    id: 'saive.exe',
     name: 'sAIve',
     tagline: 'AI-Powered Financial Guardian',
     description: 'A web app that uses AI to analyze spending habits and provide financial advice.',
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     }
   },
   {
-    id: 'deyapify',
+    id: 'deyapify.exe',
     name: 'Deyapify',
     tagline: 'Your AI-Powered Personal Assistant',
     description: 'A personal assistant app that helps manage daily tasks, reminders, and schedules using AI.',
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     },
   },
   {
-    id: 'portfolio',
+    id: 'portfolio.exe',
     name: 'Portfolio',
     tagline: 'My personal portfolio built with React.',
     description: 'A portfolio website showcasing my projects, skills, and experience.',
@@ -89,6 +89,8 @@ export const projectsList = [
   '│ • sAIve                                     │',
   '│ • Deyapify                                  │',
   '│ • Portfolio                                  │',
+  '| Hint: Use cd projects then open [id]       |',
+  '│        to view details.                     │',
   '└─────────────────────────────────────────────┘',
 ];
 
