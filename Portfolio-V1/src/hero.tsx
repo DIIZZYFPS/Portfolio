@@ -94,7 +94,7 @@ function Hero() {
 
 
       {/* Typewriter Elements */}
-      <div className="z-5 w-27/100 h-110 animate-close flex flex-col justify-center items-start" style={{ animationDelay: '8000ms' }}>
+      <div className="z-5 w-27/100 h-110 animate-close flex flex-col justify-center items-start text-white" style={{ animationDelay: '8000ms' }}>
         {typewriterData.map((item, index) =>
           state.visibleElements[index] ? (
             <Typewriter key={index} text={item.text} confirmation={item.confirmation} />

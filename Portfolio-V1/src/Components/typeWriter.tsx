@@ -52,7 +52,7 @@ const Typewriter: React.FC<TypewriterProps> = ({
 
   return (
     <div>
-      <p className="text-white">
+      <p>
         &gt;{displayText} <span>&nbsp;</span>
         {showConfirmation && <span className="text-green-500">{confirmation}</span>}
       </p>
