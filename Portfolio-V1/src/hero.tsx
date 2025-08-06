@@ -29,7 +29,7 @@ function Hero() {
   ], []);
 
   useEffect(() => {
-    const timeouts: number[] = [];
+    const timeouts: (number | NodeJS.Timeout)[] = [];
 
 
     // Dynamically create timeouts for showing and hiding Typewriter elements
