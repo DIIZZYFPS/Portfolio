@@ -129,17 +129,63 @@ const ContactPanel = () => (
 
 const AboutPanel = () => (
   <div className="text-white">
-    <h2 className="text-cyan-400 text-xl mb-4 font-bold">About Me</h2>
-    <p className="text-gray-300">
-      {aboutMe.map((line, index) => (
-        <span key={index}>
-          {line}
-          <br />
-        </span>
-      ))}
-    </p>
+    <h1 className="text-cyan-400 text-xl mb-4 font-bold">About Me</h1>
+       <div className="mb-10">
+          <h2 className="text-gray-400 text-lg mb-2 font-bold">Full-stack software engineer passionate about creating innovative applications.</h2>
+          <p className="text-gray-300">
+            I enjoy working with modern technologies and solving complex problems.
+          </p>
+          <p className="text-gray-300 mb-5">
+            Currently focusing on developing local AI applications and understanding machine learning concepts.
+          </p>
+          <img src="./Media.jpg" alt="About Me" className="w-100 h-auto border-2 border-cyan-400 rounded-lg mx-auto mb-4" />
+        </div>
+        <div className="mb-10">
+            <h3 className="text-cyan-400 text-lg mb-2 font-bold">My Journey</h3>
+              <p className="text-gray-300 mb-2">
+                My journey started from my childhood facination with science and technology. Starting from Khan Academy's "Hour of Code" and building my first project, I continued to learn and grow as a developer.
+              </p>
+              <p className="text-gray-300 mb-2">
+               Now as a college student, I have continued to expand my skills and continue to satisfy my childhood curiosity. In a way I feel like I am envisioning, little by little, the future I imagined then.
+               I am extremely dedicated to my craft, and despite my many setbacks, I have always found a way to overcome them and continue to grow.
+              </p>
+              <p className="text-gray-300">
+                As of now, I am set to graduate in 2027 with a Bachelor's in Computer Science. I am excited to see where my journey takes me next. As technology continues to evolve, I am eager to be at the forefront of innovation, creating solutions that, ethically, make a difference.
+              </p>
+        </div>
+        <div className="mb-10">
+          <h3 className="text-cyan-400 text-lg mb-2 font-bold">What's Next</h3>
+          <p className="text-gray-300">
+            Throughout my many different explorational branches, I have found a passion for Artificial Intelligence. As of recent, I have been focusing on developing local AI applications, finetuning models, and optimizing workflows.
+            My current project, Project Icarus, is a planned pinnacle of this knowledge, aiming to create an assistant that can handle virtually any task. While this seems ambitious, I believe current tools and future advances can bring this goal even closer.
+          </p>
+        </div>
+        <div className="mb-10">
+          <h4 className="text-cyan-400 text-lg mb-2 font-bold">I am seeking an opportunity to join a collaborative, forward-thinking team where I can contribute to meaningful projects and continue to grow as a developer. If you're looking for a passionate and dedicated engineer, let's connect.</h4>
+          <p className="text-gray-500">
+            You can find my contact information by typing <code className='text-green-400'>'contact'</code> in the terminal
+            </p>
+        </div>
   </div>
 );
+
+const HelpPanel = () => (
+  <div className="text-white">
+    <h2 className="text-cyan-400 text-xl mb-4 font-bold">Help - Available Commands</h2>
+    <ul className="list-disc list-inside text-gray-300">
+      {helpCommand.map((line, index) => (
+        <li key={index} className="mb-1">
+          <span className="font-mono">{line}</span>
+        </li>
+      ))}
+      <li className='mb-1 font-mono'>
+        To view project details, ensure you are in the projects directory by using the <code className='text-green-400'>cd projects</code> command. <br />
+        Then use the <code className='text-green-400'>open [id]</code> command to view details.
+      </li>
+    </ul>
+  </div>
+);
+
 // --- Main Layout Component ---
 
 interface TerminalLine {
@@ -189,6 +235,7 @@ export default function Layout() {
     switch (cmd) {
       case 'help':
         output = helpCommand;
+        setActivePanel('help');
         break;
       case 'projects':
         output = projectsList;
@@ -285,6 +332,8 @@ export default function Layout() {
           return <ContactPanel />;
         case 'about':
           return <AboutPanel />;
+        case 'help':
+          return <HelpPanel />;
         case 'welcome':
         default:
           return <WelcomePanel />;
@@ -321,7 +370,7 @@ export default function Layout() {
             />
           </div>
         </div>
-        <div className="border border-white p-4 overflow-auto min-h-0">
+        <div className="border border-white p-4 overflow-auto min-h-0 scrollbar-hide">
           {renderActivePanel()}
         </div>
       </div>
