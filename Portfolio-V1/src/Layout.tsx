@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import Namebar from './Components/Namebar';
-import { projects, projectsList, skills, contactInfo, aboutMe, helpCommand } from './portfolioData.ts';
+import { projects, projectsList, skills, contactInfo, aboutMe, helpCommand, resumeContent } from './portfolioData.ts';
 import type { Project } from './portfolioData.ts';
+import { Typewriter } from 'react-simple-typewriter';
 
 // --- Panel Components ---
 
@@ -24,7 +25,7 @@ const ProjectsPanel = () => (
                 <div key={p.id} className="font-mono text-sm">
                     <span className="text-green-400">drwxr-xr-x</span>
                     <span className="text-white mx-2">1</span>
-                    <span className="text-cyan-400">guest guest</span>
+                    <span className="text-cyan-400">guest DIIZZY</span>
                     <span className="text-white ml-4">{p.id}</span>
                 </div>
             ))}
@@ -92,17 +93,53 @@ const ResumePanel = () => (
       My resume is available for download. Click the link below to view or download it.
     </p>
     <a
-      href="https://example.com/resume.pdf" // Replace with actual resume link
-      target="_blank"
+      href="./Damarrion_Morgan_Harper_resume.pdf" // Replace with actual resume link
+      download="Damarrion_Morgan-Harper_Resume.pdf"
       rel="noopener noreferrer"
       className="mt-4 inline-block bg-cyan-600 hover:bg-cyan-700 px-4 py-2 rounded text-sm transition-colors"
     >
       Download Resume
     </a>
+    <pre>
+      {resumeContent.map((line, index) => (
+        <div key={index} className="mt-2">
+          <span className="text-green-400"><Typewriter words={[line]} loop={1} typeSpeed={40} /></span> <br />
+        </div>
+      ))}
+    </pre>
 
   </div>
 );
 
+const ContactPanel = () => (
+  <div className="text-white">
+    <h2 className="text-cyan-400 text-xl mb-4 font-bold">Contact</h2>
+    <p className="text-gray-300">
+      Feel free to reach out through any of the platforms below:
+    </p>
+    <ul className="mt-4">
+      {contactInfo.map((line, index) => (
+        <li key={index} className="text-gray-300">
+          {line}
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+const AboutPanel = () => (
+  <div className="text-white">
+    <h2 className="text-cyan-400 text-xl mb-4 font-bold">About Me</h2>
+    <p className="text-gray-300">
+      {aboutMe.map((line, index) => (
+        <span key={index}>
+          {line}
+          <br />
+        </span>
+      ))}
+    </p>
+  </div>
+);
 // --- Main Layout Component ---
 
 interface TerminalLine {
@@ -113,6 +150,11 @@ interface TerminalLine {
 export default function Layout() {
   const [terminalHistory, setTerminalHistory] = useState<TerminalLine[]>([
     { type: 'output', content: '> system.portfolio.init()' },
+    { type: 'output', content: '' },
+    { type: 'output', content: '[INFO] Initializing portfolio system...' },
+    { type: 'output', content: '' },
+    { type: 'output', content: '[SUCCESS] Portfolio system initialized.' },
+    { type: 'output', content: '' },
     { type: 'output', content: '[SUCCESS] Portfolio system online. Type "help" for commands.' },
     { type: 'output', content: '' },
   ]);
@@ -153,44 +195,23 @@ export default function Layout() {
         break;
       case 'skills':
         output = skills;
+        setActivePanel('skills');
         break;
       case 'resume':
-        // Add initial line
-        newHistory.push({ type: 'output', content: 'Opening resume' });
-        newHistory.push({ type: 'output', content: '' });
-        setTerminalHistory(newHistory);
-        
-        // Create progressive loading effect
-        let dots = '';
-        const loadingInterval = setInterval(() => {
-          dots += '.';
-          if (dots.length > 3) {
-            clearInterval(loadingInterval);
-            // Final action - could open resume or show completion
-            setTerminalHistory(prev => [
-              ...prev.slice(0, -2), // Remove last line
-              { type: 'output', content: 'Opening resume... Done!' },
-              { type: 'output', content: '' }
-            ]);
-            setActivePanel('resume'); // Assuming you have a ResumePanel component
-          } else {
-            setTerminalHistory(prev => [
-              ...prev.slice(0, -2), // Remove last two lines
-              { type: 'output', content: `Opening resume${dots}` },
-              { type: 'output', content: '' }
-            ]);
-          }
-        }, 500); // Update every 500ms
-        
-        return; // Important: return early to avoid the normal output processing
+        output = ['Opening resume...'];
+        setActivePanel('resume');
+        break;
       case 'contact':
         output = contactInfo;
+        setActivePanel('contact');
         break;
       case 'about':
         output = aboutMe;
+        setActivePanel('about');
         break;
       case 'whoami':
-        output = ['guest'];
+        const currDate = new Date();
+        output = ['[redacted]','Status: Authenticated','Access Level: Omega', 'Session: Not Logged', 'Last login: ' + currDate.toString()];
         break;
       case 'clear':
         setTerminalHistory([]);
@@ -198,7 +219,7 @@ export default function Layout() {
       case 'ls':
         if (currentLocation === '/') output = ['portfolio/', '├── projects/', '├── skills/', '└── contact/'];
         else if (currentLocation === '/projects') output = ['projects/', ...projects.map(p => `  └── ${p.id}`)];
-        else output = [`ls: cannot access '${currentLocation}': No such file or directory`];
+        else output = [`.${currentLocation}/`];
         break;
       case 'cd':
         const targetDir = args[0];
@@ -261,7 +282,9 @@ export default function Layout() {
         case 'resume':
           return <ResumePanel />;
         case 'contact':
+          return <ContactPanel />;
         case 'about':
+          return <AboutPanel />;
         case 'welcome':
         default:
           return <WelcomePanel />;
@@ -280,7 +303,7 @@ export default function Layout() {
           <div className="flex-grow space-y-1">
             {terminalHistory.map((line, index) => (
               <div key={index} className={`font-mono text-sm ${line.type === 'input' ? 'text-green-300' : line.type === 'error' ? 'text-red-400' : 'text-green-400'}`}>
-                {line.content}
+               {line.type === 'output' ? <Typewriter words={[line.content]} loop={1} typeSpeed={40} /> : line.content}
               </div>
             ))}
           </div>
@@ -291,7 +314,7 @@ export default function Layout() {
               type="text"
               value={currentInput}
               onChange={(e) => setCurrentInput(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyPress}
               className="bg-transparent outline-none flex-1 text-green-400 pl-2"
               autoFocus
               disabled={isTyping}
