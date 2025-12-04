@@ -1,109 +1,140 @@
-import { useState, useEffect, useMemo } from 'react';
-import Typewriter from './Components/typeWriter';
-import Square from './Square';
-import Layout from './Layout';
-import './App.css';
+import React, { useEffect, useState, useMemo } from 'react';
 
-function Hero() {
-  const [state, setState] = useState({
-    visibleElements: Array(20).fill(false), // Visibility of Typewriter elements
-    fadeOut: false,
-    animationComplete: false,
-  });
+// --- COMPONENT: BOOT TYPEWRITER ---
+// Specialized typewriter for boot sequence with blinking cursor
 
-  const typewriterData = useMemo(() => [
-    { text: "INITIATING PROTOCOL_01...", confirmation: "[BOOT SEQUENCE ACK]" },
-    { text: "SYSTEM STATUS: ", confirmation: "[ONLINE]" },
-    { text: "LOADING VISUAL INTERFACE...", confirmation: "[UI MODULE SYNCED]" },
-    { text: "DEPLOYING USER MODULE: YOUR_NAME.EXE", confirmation: "[USER AUTHORIZED]" },
-    { text: "SYNCHRONIZING PROJECT ARCHIVES...", confirmation: "[ARCHIVE ACCESS GRANTED]" },
-    { text: "INITIALIZING NETWORK MODULES...", confirmation: "[NETWORK READY]" },
-    { text: "LOADING SECURITY PROTOCOLS...", confirmation: "[SECURE]" },
-    { text: "FINALIZING CONFIGURATIONS...", confirmation: "[CONFIGURATION COMPLETE]" },
-    { text: "STARTING MAIN APPLICATION...", confirmation: "[APPLICATION STARTED]" },
-    { text: "SYSTEM READY", confirmation: "[READY]" },
-    { text: "CONNECTING TO DATABASE...", confirmation: "[CONNECTED]" },
-    { text: "ACTIVATING USER INTERFACE...", confirmation: "[UI ACTIVE]" },
-    { text: "SYSTEM DIAGNOSTICS COMPLETE...", confirmation: "[DIAGNOSTICS OK]" },
-    { text: "SYSTEM FULLY OPERATIONAL", confirmation: "[OPERATIONAL]" },
-  ], []);
+const BootTypewriter = ({ text, onComplete }: { text: string, onComplete?: () => void }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [finished, setFinished] = useState(false);
 
   useEffect(() => {
-    const timeouts: (number | NodeJS.Timeout)[] = [];
+    let i = 0;
+    const speed = 25; 
+    
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, i + 1));
+      i++;
+      if (i > text.length) {
+        clearInterval(interval);
+        setFinished(true);
+        if (onComplete) onComplete();
+      }
+    }, speed);
 
-
-    // Dynamically create timeouts for showing and hiding Typewriter elements
-    typewriterData.forEach((_, index) => {
-      // Show the element
-      timeouts.push(
-        setTimeout(() => {
-          setState(prev => {
-            const updated = [...prev.visibleElements];
-            updated[index] = true;
-            return { ...prev, visibleElements: updated };
-          });
-        }, 1000 + index * 400) // Adjust timing for each element
-      );
-
-      // Hide the element after it has been visible for 2 seconds
-      timeouts.push(
-        setTimeout(() => {
-          setState(prev => {
-            const updated = [...prev.visibleElements];
-            updated[index] = false;
-            return { ...prev, visibleElements: updated };
-          });
-        }, 1000 + index * 500 + 9000) // Adjust timing for hiding
-      );
-    });
-
-    // Fade out and complete animation
-    timeouts.push(
-      setTimeout(() => {
-        setState(prev => ({ ...prev, fadeOut: true }));
-      }, 9000)
-    );
-    timeouts.push(
-      setTimeout(() => {
-        setState(prev => ({ ...prev, animationComplete: true }));
-      }, 9500)
-    );
-
-    // Cleanup all timeouts
-    return () => {
-      timeouts.forEach(timeout => clearTimeout(timeout));
-    };
-  }, [typewriterData]);
-
-  if (state.animationComplete) {
-    return <Layout />;
-  }
+    return () => clearInterval(interval);
+  }, []); 
 
   return (
-    <section
-      className={`relative bg-black h-screen flex flex-col items-center justify-center space-y-2 transition-opacity duration-500 ${
-        state.fadeOut ? 'opacity-0' : 'opacity-100'
-      }`}
-    >
-      
-      {/* Background Squares */}
-
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <Square />
-      </div>
-
-
-      {/* Typewriter Elements */}
-      <div className="z-5 w-27/100 h-110 animate-close flex flex-col justify-center items-start text-white" style={{ animationDelay: '8000ms' }}>
-        {typewriterData.map((item, index) =>
-          state.visibleElements[index] ? (
-            <Typewriter key={index} text={item.text} confirmation={item.confirmation} />
-          ) : null
-        )}
-      </div>
-      
-    </section>
+    <div className="font-mono text-xs md:text-sm mb-1 whitespace-nowrap overflow-hidden text-cyan-200 z-20 relative">
+      <span className="text-cyan-500 mr-2">&gt;</span>
+      {displayedText}
+      {!finished && <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 animate-pulse align-middle" />}
+    </div>
   );
-}
+};
 
-export default Hero;
+// --- COMPONENT: HYBRID SQUARE CONTAINER ---
+// Combines the "Square" visual style (cyan bars) with the dynamic containment logic.
+
+const HybridSquare = ({ children, isCollapsing }: { children: React.ReactNode, isCollapsing: boolean }) => {
+  return (
+    <div 
+      className={`relative overflow-hidden transition-all duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)]
+        ${isCollapsing ? 'w-0 opacity-0' : 'w-[30vw] max-w-2xl opacity-100'}
+        h-96 flex flex-col justify-center items-center
+      `}
+    >
+        {/* --- THE SQUARE VISUALS (Recreated from Square.tsx) --- */}
+        
+        {/* Top-Left Corner */}
+        <div className="absolute top-0 left-0 w-8 h-1 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+        <div className="absolute top-0 left-0 w-1 h-32 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+
+        {/* Top-Right Corner */}
+        <div className="absolute top-0 right-0 w-8 h-1 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+        <div className="absolute top-0 right-0 w-1 h-32 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+
+        {/* Bottom-Left Corner */}
+        <div className="absolute bottom-0 left-0 w-8 h-1 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+        <div className="absolute bottom-0 left-0 w-1 h-32 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+
+        {/* Bottom-Right Corner */}
+        <div className="absolute bottom-0 right-0 w-8 h-1 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+        <div className="absolute bottom-0 right-0 w-1 h-32 bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.8)] z-10" />
+
+        {/* Central Gradient (The "Void" feel) */}
+        <div className="absolute inset-4 bg-gradient-to-b from-black/0 via-cyan-900/10 to-black/0 animate-pulse pointer-events-none" />
+
+        {/* --- CONTENT CONTAINER --- */}
+        {/* The text lives here, properly centered and clipped by the parent transition */}
+        <div className="relative z-20 w-full px-12">
+           {children}
+        </div>
+    </div>
+  );
+};
+
+// --- VIEW: BOOT SEQUENCE ---
+
+const BootSequence = ({ onComplete }: { onComplete: () => void }) => {
+  const bootData = useMemo(() => [
+    "INITIATING PROTOCOL_01...",
+    "SYSTEM STATUS: ONLINE",
+    "LOADING VISUAL INTERFACE... [SYNCED]",
+    "DEPLOYING USER MODULE: DIIZZY.EXE",
+    "SYNCHRONIZING ARCHIVES... [GRANTED]",
+    "ESTABLISHING NEURAL LINK... [CONNECTED]",
+    "SYSTEM DIAGNOSTICS... [OK]",
+    "SYSTEM READY."
+  ], []);
+
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [isCollapsing, setIsCollapsing] = useState(false);
+
+  // Advance line logic
+  const handleLineComplete = () => {
+    // Add realistic processing delay variability
+    const delay = Math.random() * 300 + 100;
+    setTimeout(() => {
+      setCurrentLineIndex(prev => prev + 1);
+    }, delay); 
+  };
+
+  // Check for end of sequence
+  useEffect(() => {
+    if (currentLineIndex >= bootData.length) {
+      // Sequence done, initiate collapse
+      const timeout = setTimeout(() => {
+          setIsCollapsing(true);
+      }, 800);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentLineIndex, bootData.length]);
+
+  // Handle cleanup after collapse
+  useEffect(() => {
+      if (isCollapsing) {
+          const timeout = setTimeout(onComplete, 1000); // Wait for transition duration
+          return () => clearTimeout(timeout);
+      }
+  }, [isCollapsing, onComplete]);
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black z-50">
+      <HybridSquare isCollapsing={isCollapsing}>
+        {bootData.map((text, index) => (
+          // Render all previous lines + current line
+          index <= currentLineIndex ? (
+            <BootTypewriter
+              key={index}
+              text={text}
+              onComplete={index === currentLineIndex ? handleLineComplete : undefined}
+            />
+          ) : null
+        ))}
+      </HybridSquare>
+    </div>
+  );
+};
+
+export default BootSequence;

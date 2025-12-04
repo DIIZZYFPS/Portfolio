@@ -6,108 +6,77 @@ export interface Project {
   technologies: string[];
   liveUrl?: string;
   githubUrl?: string;
-  demo: {
-    type: 'iframe' | 'video' | 'image';
-    source: string;
-  };
 }
 
 export const projects: Project[] = [
   {
+    id: 'waymo-pipeline.exe',
+    name: 'Waymo Data Pipeline',
+    tagline: 'Technical Project Manager @ LA Tech',
+    description: 'Designed and implemented a data pipeline using Python and SQL on Google Cloud to streamline edge case classification for autonomous vehicle data. Leveraged Generative AI for enhanced data processing.',
+    technologies: ['Python', 'SQL', 'Google Cloud', 'GenAI'],
+    liveUrl: '#',
+    githubUrl: '#', 
+  },
+  {
+    id: 'agentbay.exe',
+    name: 'AgentBay',
+    tagline: 'E-commerce agent orchestrator.',
+    description: 'A hackathon project (Cal Hacks 12.0) featuring an e-commerce agent orchestrator. Built as a monorepo with React/TypeScript and FastAPI, utilizing Google ADK and Gemini 2.5-Flash.',
+    technologies: ['React', 'TypeScript', 'FastAPI', 'Google ADK', 'Gemini 2.5'],
+    liveUrl: '#',
+    githubUrl: 'https://github.com/DIIZZYFPS/AgentBay---Tetsy',
+  },
+  {
     id: 'career-coach.exe',
     name: 'Career Coach',
-    tagline: 'Your AI-powered career advisor.',
-    description: 'An application that provides resume feedback, generates cover letters, and conducts mock interviews using AI.',
-    technologies: ['React', 'Electron', 'Gemma 3', 'Unsloth Finetuning', 'Tailwind CSS'],
+    tagline: 'AI-powered career advisor.',
+    description: 'An application that provides resume feedback, generates cover letters, and conducts mock interviews using AI. Built with Electron and a fine-tuned Gemma 3 model.',
+    technologies: ['React', 'Electron', 'Gemma 3', 'Unsloth', 'Tailwind'],
     liveUrl: '#',
     githubUrl: 'https://github.com/DIIZZYFPS/career-coach',
-    demo: {
-      type: 'image',
-      source: 'https://placehold.co/600x400/000000/FFF?text=Career+Coach+Demo', // Replace with actual image/video/iframe
-    },
   },
   {
     id: 'project-icarus.exe',
     name: 'Project Icarus',
     tagline: 'Collaborative task management.',
-    description: 'A real-time project management tool with features like kanban boards, task assignments, and progress tracking.',
+    description: 'A real-time project management tool with features like kanban boards, task assignments, and progress tracking. Orchestrated via Python FastAPI.',
     technologies: ['React', 'Electron', 'LLM', 'Python', 'FastAPI'],
     liveUrl: '#',
     githubUrl: 'https://github.com/DIIZZYFPS/project-icarus',
-    demo: {
-      type: 'image',
-      source: 'https://placehold.co/600x400/000000/FFF?text=Project+Icarus+Demo',
-    },
   },
   {
     id: 'saive.exe',
     name: 'sAIve',
     tagline: 'AI-Powered Financial Guardian',
-    description: 'A web app that uses AI to analyze spending habits and provide financial advice.',
+    description: 'A desktop application utilizing local AI to analyze spending habits, forecast savings, and visualize financial data flows.',
     technologies: ['React', 'TailwindCSS', 'Python', 'Electron'],
     githubUrl: 'https://github.com/DIIZZYFPS/sAIve',
-    demo: {
-      type: 'iframe',
-      source: 'https://github.com/DIIZZYFPS/sAIve'
-    }
   },
   {
     id: 'deyapify.exe',
     name: 'Deyapify',
-    tagline: 'Your AI-Powered Personal Assistant',
-    description: 'A personal assistant app that helps manage daily tasks, reminders, and schedules using AI.',
+    tagline: 'AI-Powered Personal Assistant',
+    description: 'A personal assistant app that helps manage daily tasks, reminders, and schedules using AI. Features audio-to-summary via Whisper V3.',
     technologies: ['React', 'Python', 'Gemma 3', 'FastAPI'],
     liveUrl: '#',
     githubUrl: 'https://github.com/DIIZZYFPS/deyapify',
-    demo: {
-      type: 'image',
-      source: 'https://placehold.co/600x400/000000/FFF?text=Deyapify+Demo',
-    },
   },
   {
     id: 'portfolio.exe',
     name: 'Portfolio',
-    tagline: 'My personal portfolio built with React.',
-    description: 'A portfolio website showcasing my projects, skills, and experience.',
-    technologies: ['React', 'TypeScript', 'Tailwind CSS'],
+    tagline: 'Recursive Self-Reference.',
+    description: 'A dual-interface portfolio website showcasing my projects. Features a standard business view and a hidden terminal interface.',
+    technologies: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
     liveUrl: '#',
     githubUrl: 'https://github.com/DIIZZYFPS/portfolio',
-    demo: {
-      type: 'iframe',
-      source: 'https://github.com/DIIZZYFPS/portfolio',
-    },
   },
 ];
-
-// This is the new part for the `projects` command output
-export const projectsList = [
-  '┌─────────────────────────────────────────────┐',
-  '│                 PROJECTS                    │',
-  '├─────────────────────────────────────────────┤',
-  '│ • Career Coach                              │',
-  '│ • Project Icarus                          │',
-  '│ • sAIve                                     │',
-  '│ • Deyapify                                  │',
-  '│ • Portfolio                                  │',
-  '| Hint: Use cd projects then open [id]       |',
-  '│        to view details.                     │',
-  '└─────────────────────────────────────────────┘',
-];
-
 
 export const skills = [
   'Languages: Python, JavaScript, Java, HTML, CSS, SQL, TypeScript',
   'Frameworks: PyTorch, React, Bootstrap, Tailwind, FastAPI, Electron',
-  'Tools: PEFT, QLORA, Agile, Github, Machine Learning, AWS,',
-  '       HuggingFace, CanvasLMS ',
-];
-
-export const contactInfo = [
-  'Contact Information:',
-  '',
-  'Email: damarrion.dev@example.com',
-  'GitHub: github.com/DIIZZYFPS',
-  'LinkedIn: linkedin.com/in/diizzy',
+  'Tools: PEFT, QLORA, Agile, Github, Machine Learning, AWS, HuggingFace, CanvasLMS'
 ];
 
 export const aboutMe = [
@@ -118,79 +87,45 @@ export const aboutMe = [
   'modern technologies and solving complex problems.',
   '',
   'Currently focusing on React, TypeScript, and',
-  'AI development.',
+  'Local AI development.',
+];
+
+export const contactInfo = [
+  'Contact Information:',
+  '',
+  'Email: damarrion.dev@example.com',
+  'GitHub: github.com/DIIZZYFPS',
+  'LinkedIn: linkedin.com/in/diizzy',
+];
+
+export const projectsList = [
+  '┌─────────────────────────────────────────────┐',
+  '│                 PROJECTS                    │',
+  '├─────────────────────────────────────────────┤',
+  '│ • Waymo Data Pipeline                       │',
+  '│ • AgentBay                                  │',
+  '│ • Career Coach                              │',
+  '│ • Project Icarus                            │',
+  '│ • sAIve                                     │',
+  '│ • Deyapify                                  │',
+  '│ • Portfolio                                 │',
+  '| Hint: Use cd projects then open [id]        |',
+  '│        to view details.                     │',
+  '└─────────────────────────────────────────────┘',
 ];
 
 export const helpCommand = [
-      'Available commands:',
-      '  help        - Show this help message',
-      '  projects    - List all projects',
-      '  skills      - Display technical skills',
-      '  contact     - Show contact information',
-      '  about       - About me',
-      '  clear       - Clear terminal',
-      '  whoami      - Display current user info',
-      '  ls          - List portfolio contents',
-      '  cd [dir]    - Change directory to [dir]',
-      '  open [id]   - Open a project to view details',
-];
-
-export const resumeContent = [
-  '┌───────────────────────────────────────────────────────────────────┐',
-  '│ Damarrion Morgan-Harper                                           │',
-  '│ Los Angeles, CA | dgodsonmo@gmail.com                            │',
-  '│ linkedin.com/in/diizzy/ | github.com/diizzyfps                   │',
-  '└───────────────────────────────────────────────────────────────────┘',
-  '',
-  '┌───────────────────────────────────────────────────────────────────┐',
-  '│ EDUCATION                                                         │',
-  '├───────────────────────────────────────────────────────────────────┤',
-  '│ California State University - Los Angeles                         │',
-  '│   Bachelor of Science: Computer Science                           │',
-  '│   Expected: May 2027                                              │',
-  '└───────────────────────────────────────────────────────────────────┘',
-  '',
-  '┌───────────────────────────────────────────────────────────────────┐',
-  '│ SKILLS                                                            │',
-  '├───────────────────────────────────────────────────────────────────┤',
-  '│ Languages: Python, JavaScript, Java, HTML, CSS, SQL, TypeScript  │',
-  '│ Frameworks: PyTorch, React, Bootstrap, Tailwind, FastAPI, Electron│',
-  '│ Tools: PEFT, QLORA, Agile, Github, Machine Learning, AWS,        │',
-  '│        HuggingFace, CanvasLMS                                     │',
-  '└───────────────────────────────────────────────────────────────────┘',
-  '',
-  '┌───────────────────────────────────────────────────────────────────┐',
-  '│ PROJECTS                                                          │',
-  '├───────────────────────────────────────────────────────────────────┤',
-  '│ Career Coach - github.com/DIIZZYFPS/Career-Coach                 │',
-  '│   • Fine-tuned a Gemma 3 4B model using PEFT and QLORA methods. │',
-  '│   • Engineered a Python backend with FastAPI to serve the model. │',
-  '│   • Built a responsive UI in React bundled with Electron.        │',
-  '│                                                                   │',
-  '│ Deyapify - github.com/DIIZZYFPS/Deyapify                         │',
-  '│   • Architected an AI audio-to-summary platform using Whisper V3│',
-  '│   • Achieved a 98% performance improvement in AI model inference. │',
-  '│   • Developed a full-stack app with a FastAPI backend and React FE│',
-  '│                                                                   │',
-  '│ sAlve - github.com/DIIZZYFPS/sAlve                               │',
-  '│   • Developed a full-stack desktop budgeting application.        │',
-  '│   • Implemented dynamic data visualizations (Sankey, line, radar)│',
-  '└───────────────────────────────────────────────────────────────────┘',
-  '',
-  '┌───────────────────────────────────────────────────────────────────┐',
-  '│ EXPERIENCE                                                        │',
-  '├───────────────────────────────────────────────────────────────────┤',
-  '│ IT/Cybersecurity & Software Engineering Rising Intern, La Tech   │',
-  '│   Aug 2025-Present                                                │',
-  '│                                                                   │',
-  '│ Academic Technology Assistant, Center for Effective Teaching     │',
-  '│   Jan 2025-Present                                                │',
-  '│   • Ensure faculty support by resolving tech tickets via ServiceNow│',
-  '│   • Contributed to the development of a custom CRM system (FDMS). │',
-  '│                                                                   │',
-  '│ Fulfillment Expert, Target                                       │',
-  '│   Nov 2021-Oct 2024                                              │',
-  '│   • Played a key role in the store overhaul following a major    │',
-  '│     roof collapse, resulting in the store reopening.             │',
-  '└───────────────────────────────────────────────────────────────────┘',
+  'Available commands:',
+  '  help        - Show this help message',
+  '  projects    - List all projects',
+  '  skills      - Display technical skills',
+  '  contact     - Show contact information',
+  '  about       - About me',
+  '  clear       - Clear terminal',
+  '  whoami      - Display current user info',
+  '  ls          - List portfolio contents',
+  '  cd [dir]    - Change directory to [dir]',
+  '  open [id]   - Open a project to view details',
+  '  diizzy      - ???',
+  '  reboot      - Restart system'
 ];
