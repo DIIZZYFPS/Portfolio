@@ -35,29 +35,34 @@ const useTypewriter = (
   return displayText;
 };
 
-const Typewriter: React.FC<TypewriterProps> = ({ 
-  text, 
-  speed = 15, 
-  confirmation = ''
-}) => {
-  const [showConfirmation, setShowConfirmation] = useState<boolean>(false);
+const Typewriter = ({ text, onComplete }: { text: string, onComplete?: () => void }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [finished, setFinished] = useState(false);
 
-  const displayText = useTypewriter(text, speed, () => {
-    const randomDelay = Math.floor(Math.random() * (300 - 100)) + 100;
+  useEffect(() => {
+    let i = 0;
+    const speed = 25; 
+    
+    const interval = setInterval(() => {
+      setDisplayedText(text.slice(0, i + 1));
+      i++;
+      if (i > text.length) {
+        clearInterval(interval);
+        setFinished(true);
+        if (onComplete) onComplete();
+      }
+    }, speed);
 
-    setTimeout(() => {
-      setShowConfirmation(true);
-    }, randomDelay);
-  });
-
+    return () => clearInterval(interval);
+  }, [text, onComplete]); 
   return (
-    <div>
-      <p>
-        &gt;{displayText} <span>&nbsp;</span>
-        {showConfirmation && <span className="text-green-500">{confirmation}</span>}
-      </p>
+    <div className="font-mono text-xs md:text-sm mb-1 whitespace-nowrap overflow-hidden text-cyan-200 z-20 relative">
+      <span className="text-cyan-500 mr-2">&gt;</span>
+      {displayedText}
+      {!finished && <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 animate-pulse align-middle" />}
     </div>
   );
 };
+
 
 export default Typewriter;
