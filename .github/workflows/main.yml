@@ -33,7 +33,10 @@ jobs:
         working-directory: ./Portfolio-V1
 
       - name: Build with Vite
-        run: npm run build
+        # Change this line:
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html
         working-directory: ./Portfolio-V1
 
       - name: Upload artifact
